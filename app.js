@@ -1,6 +1,7 @@
 import express, { json } from "express"; // const express = require('express');
 import bodyParser from "body-parser"; // const bodyParser = require('body-parser');
 import mysql from "mysql"; // const mysql = require('mysql');
+import mysql2 from "mysql2"; // const mysql = require('mysql');
 import dotenv from 'dotenv'; // const dotenv = require('dotenv')
 import cors from "cors";
 
@@ -17,21 +18,37 @@ app.use(
 app.use(json());
 
 const conn = mysql.createConnection({
+    port:process.env.RDS_DB_PORT,
     host:process.env.RDS_DB_HOST,
     user:process.env.RDS_DB_USER,
     password:process.env.RDS_DB_PASS, 
     database:process.env.RDS_DB_NAME
 });
 
+// const connection = mysql2.createConnection({
+//     host:process.env.RDS_DB_HOST,
+//     user:process.env.RDS_DB_USER,
+//     password:process.env.RDS_DB_PASS, 
+//     database:process.env.RDS_DB_NAME
+// });
+
+// connection.connect((error) => {
+//     if (error) {
+//       console.error('Error connecting to MySQL database:', error);
+//       res.send(apiResponse(JSON.stringify(error)))
+//     } else {
+//       console.log('Connected to MySQL database!');
+//     }
+// });
 
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
 app.get('/api/items', (req, res) => {
     // throw new Error('database failed to connect');
-    conn.connect((err) => { // if(err) throw err;
-        console.log('Database is connected to app');    
-    })
+    // conn.connect((err) => { // if(err) throw err;
+    //     console.log('Database is connected to app');    
+    // })
 
     try {
         let sql = "SELECT * FROM items";
@@ -45,10 +62,13 @@ app.get('/api/items', (req, res) => {
         // res.send(apiResponse(results))
         
         conn.end();
+        // connection.end();
 
     } catch(e) {
         console.log(e);
         conn.end();
+        // connection.end();
+
         // res.send(apiResponse([{'msg':'database failed to connect!'}]))
         res.send(apiResponse(e))
     }
