@@ -42,7 +42,8 @@ app.get('/api/items', (req, res) => {
     try {
         let sql = "SELECT * FROM items";
         let query = conn.query(sql, (err, results) => { // if(err) throw err;
-            res.send(apiResponse(results))
+            // res.send(apiResponse(results))
+            res.send(JSON.stringify(results))
         });
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
         // res.send(apiResponse(results))
