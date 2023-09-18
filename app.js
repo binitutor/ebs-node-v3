@@ -34,22 +34,23 @@ app.get('/api/items', (req, res) => {
     })
 
     try {
-        // let sql = "SELECT * FROM items";
+        let sql = "SELECT * FROM items";
     
-        // let query = conn.query(sql, (err, results) => {
-        //     // if(err) throw err;
-        //     res.send(apiResponse(results))
-        // });
+        let query = conn.query(sql, (err, results) => {
+            // if(err) throw err;
+            res.send(apiResponse(results))
+        });
 
-        let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
-        res.send(apiResponse(results))
+        // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
+        // res.send(apiResponse(results))
         
         conn.end();
 
     } catch(e) {
         console.log(e);
         conn.end();
-        res.send(apiResponse([{'msg':'database failed to connect!'}]))
+        // res.send(apiResponse([{'msg':'database failed to connect!'}]))
+        res.send(apiResponse(e))
     }
 
     
