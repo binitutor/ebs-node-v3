@@ -16,19 +16,36 @@ app.use(
 );
 app.use(json());
 
+const conn = mysql.createConnection({
+    host:process.env.RDS_DB_HOST,
+    user:process.env.RDS_DB_USER,
+    password:process.env.RDS_DB_PASS, 
+    database:process.env.RDS_DB_NAME
+});
 
-// app.get('/', (req, res) => {
-//     console.log(`Server listening on port ${PORT}`);
-//     res.send('Server is running...')
-// });
+conn.connect((err) => {
+    if(err) throw err;
+    console.log('Database is connected to app');    
+})
+
 app.get("/", (req, res) => res.send("Server is running..."));
 
-// app.listen(process.env.PORT || 8081);
-// module.exports = app;
+app.get('/api/items', (req, res) => {
+    let sql = "SELECT * FROM items";
+    let query = conn.query(sql, (err, results) => {
+        if(err) throw err;
+        res.send(apiResponse(results))
+    });
+    
+});
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
+
+function apiResponse(results) {
+    return JSON.stringify({"status":200, "error":null, "response":results});
+}
 
 
 /*
