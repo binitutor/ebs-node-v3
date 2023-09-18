@@ -1,8 +1,7 @@
-import express, { json } from "express"; // const express = require('express');
-import bodyParser from "body-parser"; // const bodyParser = require('body-parser');
-import mysql from "mysql"; // const mysql = require('mysql');
-import mysql2 from "mysql2"; // const mysql = require('mysql');
-import dotenv from 'dotenv'; // const dotenv = require('dotenv')
+import express, { json } from "express";
+import bodyParser from "body-parser";
+import mysql from "mysql";
+import dotenv from 'dotenv';
 import cors from "cors";
 
 const app = express();
@@ -18,28 +17,18 @@ app.use(
 app.use(json());
 
 const conn = mysql.createConnection({
-    port:process.env.RDS_DB_PORT,
-    host:process.env.RDS_DB_HOST,
-    user:process.env.RDS_DB_USER,
-    password:process.env.RDS_DB_PASS, 
-    database:process.env.RDS_DB_NAME
+    port: process.env.RDS_DB_PORT,
+    host: process.env.RDS_DB_HOST,
+    user: process.env.RDS_DB_USER,
+    password: process.env.RDS_DB_PASS, 
+    database: process.env.RDS_DB_NAME
 });
 
-// const connection = mysql2.createConnection({
-//     host:process.env.RDS_DB_HOST,
-//     user:process.env.RDS_DB_USER,
-//     password:process.env.RDS_DB_PASS, 
-//     database:process.env.RDS_DB_NAME
-// });
-
-// connection.connect((error) => {
-//     if (error) {
-//       console.error('Error connecting to MySQL database:', error);
-//       res.send(apiResponse(JSON.stringify(error)))
-//     } else {
-//       console.log('Connected to MySQL database!');
-//     }
-// });
+// var connection = mysql.createConnection({
+//     host: process.env.RDS_DB_HOST,
+//     user: process.env.RDS_DB_USER,
+//     password: process.env.RDS_DB_PASS, 
+//   });
 
 
 app.get("/", (req, res) => res.send("Server is running..."));
@@ -52,28 +41,18 @@ app.get('/api/items', (req, res) => {
 
     try {
         let sql = "SELECT * FROM items";
-    
-        let query = conn.query(sql, (err, results) => {
-            // if(err) throw err;
+        let query = conn.query(sql, (err, results) => { // if(err) throw err;
             res.send(apiResponse(results))
         });
-
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
         // res.send(apiResponse(results))
-        
-        conn.end();
-        // connection.end();
-
+        conn.end(); // connection.end();
     } catch(e) {
         console.log(e);
-        conn.end();
-        // connection.end();
-
-        // res.send(apiResponse([{'msg':'database failed to connect!'}]))
-        res.send(apiResponse(e))
+        conn.end(); // connection.end();
+        res.send(apiResponse("[{'msg':'database failed to connect!'}]")) // res.send(apiResponse(e))
     }
 
-    
 
     // conn.connect(function(err) {
     //     if (err) throw err;
