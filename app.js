@@ -1,3 +1,37 @@
+import express, { json } from "express"; // const express = require('express');
+import bodyParser from "body-parser"; // const bodyParser = require('body-parser');
+import mysql from "mysql"; // const mysql = require('mysql');
+import dotenv from 'dotenv'; // const dotenv = require('dotenv')
+import cors from "cors";
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+dotenv.config()
+app.use(bodyParser.json());
+app.use(
+    cors({
+      origin: "*",
+    })
+);
+app.use(json());
+
+
+// app.get('/', (req, res) => {
+//     console.log(`Server listening on port ${PORT}`);
+//     res.send('Server is running...')
+// });
+app.get("/", (req, res) => res.send("Server is running..."));
+
+// app.listen(process.env.PORT || 8081);
+// module.exports = app;
+
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+});
+
+
+/*
 const port = process.env.PORT || 3000,
     http = require('http'),
     fs = require('fs'),
@@ -37,3 +71,6 @@ server.listen(port);
 
 // Put a friendly message on the terminal
 console.log('Server running at http://127.0.0.1:' + port + '/');
+
+
+ */
