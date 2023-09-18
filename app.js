@@ -23,14 +23,23 @@ const conn = mysql.createConnection({
     database:process.env.RDS_DB_NAME
 });
 
-conn.connect((err) => {
-    if(err) throw err;
-    console.log('Database is connected to app');    
-})
-
 app.get("/", (req, res) => res.send("Server is running..."));
 
 app.get('/api/items', (req, res) => {
+    conn.connect((err) => {
+        if(err) throw err;
+        console.log('Database is connected to app');    
+    })
+
+    let sql = "SELECT * FROM items";
+
+    let query = conn.query(sql, (err, results) => {
+        if(err) throw err;
+        res.send(apiResponse(results))
+    });
+    
+    conn.end();
+
     // conn.connect(function(err) {
     //     if (err) throw err;
     //     conn.query("SELECT * FROM customers", function (err, result, fields) {
@@ -40,14 +49,6 @@ app.get('/api/items', (req, res) => {
     //     });
     //     conn.end();
     // });
-
-    let sql = "SELECT * FROM items";
-
-    let query = conn.query(sql, (err, results) => {
-        if(err) throw err;
-        res.send(apiResponse(results))
-        conn.end();
-    });
 
     // conn.query(sql, (err, results) => {
     //     // if(err) throw err;
