@@ -23,15 +23,19 @@ const conn = mysql.createConnection({
     database:process.env.RDS_DB_NAME
 });
 
+
+
 app.get("/", (req, res) => res.send("Server is running..."));
 
 app.get('/api/items', (req, res) => {
     // throw new Error('database failed to connect');
+    conn.connect((err) => {
+        // if(err) throw err;
+        console.log('Database is connected to app');    
+    })
+
     try {
-        conn.connect((err) => {
-            // if(err) throw err;
-            console.log('Database is connected to app');    
-        })
+        
     
         let sql = "SELECT * FROM items";
     
@@ -39,12 +43,13 @@ app.get('/api/items', (req, res) => {
             // if(err) throw err;
             res.send(apiResponse(results))
         });
+
         conn.end();
 
     } catch(e) {
         console.log(e);
         conn.end();
-        res.send(apiResponse('database failed to connect!'))
+        res.send(apiResponse(['database failed to connect!']))
     }
 
     
