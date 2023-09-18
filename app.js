@@ -38,10 +38,16 @@ app.get('/api/items', (req, res) => {
     // });
 
     conn.query(sql, (err, results) => {
-        if(err) throw err;
-        res.send(apiResponse(results))
+        // if(err) throw err;
+        // res.send(apiResponse(results))
+        if(err) {
+            res.send(apiResponse(err))
+        }else{
+            res.send(apiResponse(results))
+        }
+        
     });
-    
+
     // let results = '{"status":200,"error":null,"response":[{"id":1,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]}'
     // res.send(apiResponse(results))
 });
