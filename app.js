@@ -26,19 +26,28 @@ const conn = mysql.createConnection({
 app.get("/", (req, res) => res.send("Server is running..."));
 
 app.get('/api/items', (req, res) => {
-    conn.connect((err) => {
-        if(err) throw err;
-        console.log('Database is connected to app');    
-    })
-
-    let sql = "SELECT * FROM items";
-
-    let query = conn.query(sql, (err, results) => {
-        if(err) throw err;
-        res.send(apiResponse(results))
-    });
+    // throw new Error('database failed to connect');
+    try {
+        conn.connect((err) => {
+            // if(err) throw err;
+            console.log('Database is connected to app');    
+        })
     
-    conn.end();
+        let sql = "SELECT * FROM items";
+    
+        let query = conn.query(sql, (err, results) => {
+            // if(err) throw err;
+            res.send(apiResponse(results))
+        });
+        conn.end();
+
+    } catch(e) {
+        console.log(e);
+        conn.end();
+        res.send(apiResponse('database failed to connect!'))
+    }
+
+    
 
     // conn.connect(function(err) {
     //     if (err) throw err;
