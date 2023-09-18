@@ -50,7 +50,7 @@ app.get('/api/items', (req, res) => {
     } catch(e) {
         console.log(e);
         conn.end(); // connection.end();
-        res.send(apiResponse("[{'msg':'database failed to connect!'}]")) // res.send(apiResponse(e))
+        // res.send(apiResponse("[{'msg':'database failed to connect!'}]")) // res.send(apiResponse(e))
     }
 
 
