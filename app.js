@@ -43,7 +43,7 @@ app.get('/api/items', (req, res) => {
         let sql = "SELECT * FROM items";
         let query = conn.query(sql, (err, results) => { // if(err) throw err;
             // res.send(apiResponse(results))
-            res.send(JSON.stringify(results))
+            // res.send(JSON.stringify(results))
 
             // console.log(results)
             res.send('data is retrieved!')
