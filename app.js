@@ -52,7 +52,8 @@ app.get('/api/items', (req, res) => {
         
             results=JSON.parse(JSON.stringify(results))
             // res.send(`data is retrieved! ${results}`)
-            res.send(apiResponse(results))
+            // res.send(apiResponse(results))
+            res.send(results)
         });
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
         // res.send(apiResponse(results))
