@@ -44,6 +44,10 @@ app.get('/api/items', (req, res) => {
         let query = conn.query(sql, (err, results) => { // if(err) throw err;
             // res.send(apiResponse(results))
             res.send(JSON.stringify(results))
+
+            // console.log(results)
+            res.send('data is retrieved!')
+
         });
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
         // res.send(apiResponse(results))
