@@ -46,7 +46,7 @@ app.get('/api/items', (req, res) => {
             // res.send(JSON.stringify(results))
 
             // console.log(results)
-            res.send('data is retrieved!')
+            res.send(`data is retrieved! ${[0].title}`)
 
         });
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
