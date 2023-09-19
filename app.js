@@ -47,11 +47,11 @@ app.get('/api/items', (req, res) => {
 
             // console.log(results)
             // res.send(`data is retrieved! ${results[0].title}`)
-            let result = Object.values(JSON.parse(JSON.stringify(results)));
+            // let result = Object.values(JSON.parse(JSON.stringify(results)));
             // result.forEach((v) => console.log(v));
         
-
-            result.forEach((v) => res.send(`data is retrieved! ${v}`));
+            results=JSON.parse(JSON.stringify(results))
+            res.send(`data is retrieved! ${results}`)
 
         });
         // let results = '[{"id":0,"title":"first title","body":"this is body"},{"id":2,"title":"second title","body":"this is body"}]'
